@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Char</title>
+</head>
+<body>
+
+<form action="/charCreated" method="post">
+    <div>
+        <label for="nom">Nom</label>
+        <input type="text" id="nom" name="nom">
+    </div>
+    <div>
+        <label for="class">Classe : </label>
+        <select name="class" id="class" required>
+            <option></option>
+            <option>warrior</option>
+            <option>mage</option>
+            <option>rogue</option>
+            <option>healer</option>
+        </select>
+    </div>
+    <button type="submit">Créer</button>
+</form>
+
+</body>
+</html>
