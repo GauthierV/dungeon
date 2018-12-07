@@ -25,11 +25,19 @@ class Combat
     }
 
     public function attack(){
+        $dmg = 0;
         $att = $this->attaquant->getAttack();
         $def = $this->defender->getDefense();
         $dice = new Dice();
-        $dmg = $att * $dice->throwDice(2);
-        return $dmg;
+        $chance = 70 + ($att - $def);
+        $roll = $dice->throwDice(100);
+        if ($chance > $roll){
+            $roll2 = $dice->throwDice(12);
+            $dmg = round($att/5 * $roll2);
+            return $dmg;
+        } else {
+            return $dmg;
+        }
     }
 
 }
