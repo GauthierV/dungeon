@@ -4,18 +4,18 @@ namespace POE\database;
 
 class Connexion
 {
-    private $dbh;
+    protected $connexion;
 
     public function __construct()
     {
         $user = "root";
         $pass = "dawan";
-        $this->dbh = new \PDO('mysql:host=localhost;dbname=dungeon', $user, $pass);
-        $this->dbh->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+        $this->connexion = new \PDO('mysql:host=localhost;dbname=dungeon', $user, $pass);
+        $this->connexion->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     }
 
     public function getDb(): \PDO
     {
-        return $this->dbh;
+        return $this->connexion;
     }
 }

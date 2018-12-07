@@ -2,7 +2,7 @@
 
 namespace POE\database;
 
-class Character
+class Character extends Connexion
 {
     private $name;
     private $class;
@@ -43,11 +43,6 @@ class Character
     ];
 
 
-    public function __construct()
-    {
-
-    }
-
 
     public static function getChars()
     {
@@ -80,14 +75,17 @@ class Character
         $this->setAttack(self::TYPES[$class]['attack']);
         $this->setDefense(self::TYPES[$class]['defense']);;
 
-        $connect = new Connexion();
-        $connexion = $connect->getDb();
+//        $connect = new Connexion();
+//        $connexion = $connect->getDb();
 
-        $statement = $connexion->prepare(
+        $statement = $this->connexion->prepare(
             "INSERT INTO characters (name, life_max, energy_max, energy_current, attack, defense, life_current, class, x_position, y_position)
             VALUES(:name, :life_max, :energy_max, :energy_current, :attack, :defense, :life_current, :class, :x_position, :y_position)");
 
         foreach ($this as $key => $value) {
+            if ($key == "connexion"){
+                continue;
+            }
             $statement->bindValue($key, $value);
         }
 
