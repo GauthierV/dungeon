@@ -2,18 +2,10 @@
 
 namespace POE\database;
 
-class CharacterLoader
+class CharacterLoader extends CharacterConnexion
 {
-    private $connexion;
-
-    public function __construct(Connexion $connect)
-    {
-        $this->connexion = $connect->getDb();
-    }
 
     public function load($name){
-
-
 
         $statement = $this->connexion->prepare("SELECT * FROM characters WHERE name = :name");
 
@@ -26,7 +18,5 @@ class CharacterLoader
         $character = $statement->fetch();
 
         return $character;
-//        $character = new Character("titi", "mage");
-//        return $character;
     }
 }

@@ -2,7 +2,6 @@
 
 namespace POE\database;
 
-
 class Character
 {
     private $name;

@@ -1,5 +1,7 @@
 <?php
 
+namespace POE\fight;
+
 class Dice
 {
     public function throwDice(int $sides = 6): int

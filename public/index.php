@@ -32,5 +32,9 @@ if ($_SERVER['REQUEST_URI'] == "/"){
     echo $dungeon->listePerso($listChars);
 }
 
+if ($_SERVER['REQUEST_URI'] == "/fight"){
+    echo $dungeon->fight();
+}
+
 
 

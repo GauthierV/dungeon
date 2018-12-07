@@ -2,7 +2,6 @@
 
 namespace POE\database;
 
-
 class Connexion
 {
     private $dbh;
