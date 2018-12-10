@@ -5,14 +5,22 @@
     <title>Combat</title>
 </head>
 <body>
-<h2>Combat entre <?= $this->attaquant->getName() ?> et <?= $this->defender->getName() ?></h2>
+<h2>Combat entre <?= $this->perso1->getName() ?> et <?= $this->perso2->getName() ?></h2>
 
-<?php if ($dmg !== 0) {
-    echo "<p>" . $this->attaquant->getName() . "  attaque " . $this->defender->getName() . " et lui inflige " . $dmg . " dégats.</p>";
-} else {
-    echo "<p>" . $this->attaquant->getName() . "  rate lamentablement et inflige " . $dmg . " dégat à " . $this->defender->getName() . ".</p>";
-} ?>
-<p>Il reste <?= $this->defender->getLifeCurrent() - $dmg ?> HP à <?= $this->defender->getName() ?>.</p>
+
+
+<?php //foreach ($this->combatLog as $log){
+//    echo "<p>" . $log . "</p>";
+//} ?>
+
+<?php
+while ($this->valid()){
+    echo "<p>" . $this->combatLog[$this->position] . "</p>";
+    $this->next();
+}
+?>
+
+
 <!--<p>Quel action voulez vous faire?</p>-->
 <!--<form action="/attack">-->
 <!--    <button type="submit">Attack</button>-->

@@ -1,7 +1,6 @@
 <?php
 
 include __DIR__ . "/../template/navbar.html";
-//echo $_SERVER['REQUEST_URI'];
 include __DIR__ . "/../src/autoload.php";
 
 $dungeon = new POE\Dungeon();

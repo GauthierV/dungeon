@@ -6,7 +6,9 @@ class Connexion
 {
     protected $connexion;
 
-    public function __construct()
+    private static $instance;
+
+    private function __construct()
     {
         $user = "root";
         $pass = "dawan";
@@ -14,8 +16,15 @@ class Connexion
         $this->connexion->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     }
 
-    public function getDb(): \PDO
+    public static function getInstance(): self
     {
+        if (!self::$instance instanceof self){
+            self::$instance = new self;
+        }
+        return self::$instance;
+    }
+
+    public function getDb(): \PDO{
         return $this->connexion;
     }
 }

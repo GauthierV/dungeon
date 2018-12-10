@@ -2,7 +2,7 @@
 
 namespace POE\database;
 
-class Character extends Connexion
+class Character
 {
     private $name;
     private $class;
@@ -46,7 +46,7 @@ class Character extends Connexion
 
     public static function getChars()
     {
-        $connect = new Connexion();
+        $connect = Connexion::getInstance();
         $return = [];
         $connexion = $connect->getDb();
         $result = $connexion->query("SELECT name, class FROM characters");
@@ -77,8 +77,8 @@ class Character extends Connexion
 
 //        $connect = new Connexion();
 //        $connexion = $connect->getDb();
-
-        $statement = $this->connexion->prepare(
+        $connexion = Connexion::getInstance()->getDb();
+        $statement = $connexion->prepare(
             "INSERT INTO characters (name, life_max, energy_max, energy_current, attack, defense, life_current, class, x_position, y_position)
             VALUES(:name, :life_max, :energy_max, :energy_current, :attack, :defense, :life_current, :class, :x_position, :y_position)");
 

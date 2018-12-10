@@ -2,12 +2,14 @@
 
 namespace POE\database;
 
-class CharacterLoader extends Connexion
+class CharacterLoader
 {
 
     public function load($name){
 
-        $statement = $this->connexion->prepare("SELECT * FROM characters WHERE name = :name");
+        $connexion = Connexion::getInstance()->getDb();
+
+        $statement = $connexion->prepare("SELECT * FROM characters WHERE name = :name");
 
         $statement->setFetchMode(\PDO::FETCH_CLASS, Character::class);
 

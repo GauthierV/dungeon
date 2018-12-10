@@ -3,23 +3,22 @@
 namespace POE;
 
 use POE\database\CharacterLoader;
-use POE\database\Connexion;
 use POE\fight\Combat;
 
 class Dungeon
 {
 
     public function  fight(){
-        $loader = new CharacterLoader(new Connexion());
+        $loader = new CharacterLoader();
         $char1 = $loader->load("Toto");
-        $char2 = $loader->load("Jean-Mich");
+        $char2 = $loader->load("JCVD");
         $combat = new Combat($char1, $char2);
         echo $combat->fight();
     }
 
     public function reportSituation($name)
     {
-        $loader = new CharacterLoader(new Connexion());
+        $loader = new CharacterLoader();
         $character = $loader->load($name);
         $report = $character->move(0, 2);
 
