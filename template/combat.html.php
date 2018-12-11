@@ -9,16 +9,16 @@
 
 
 
-<?php //foreach ($this->combatLog as $log){
-//    echo "<p>" . $log . "</p>";
-//} ?>
+<?php foreach ($fightLog as $log){
+    echo "<p>" . $log . "</p>";
+} ?>
 
 <?php
-while ($this->valid()){
-    echo "<p>" . $this->combatLog[$this->position] . "</p>";
-    $this->next();
-}
-?>
+//while ($fightLog->valid()){
+//    echo "<p>" . $fightLog->current(); "</p>";
+//    $fightLog->next();
+//}
+//?>
 
 
 <!--<p>Quel action voulez vous faire?</p>-->

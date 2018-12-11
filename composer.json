@@ -1,0 +1,15 @@
+{
+    "name": "poe/dungeon",
+    "description": "Jeu de baggare",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "GauthierV",
+            "email": "akakult@gmail.com"
+        }
+    ],
+    "require": {
+        "monolog/monolog": "^1.24"
+    }
+}

@@ -4,7 +4,7 @@ namespace POE\fight;
 
 use POE\database\Character;
 
-class Combat implements \Iterator
+class Combat
 {
 
     private $perso1;
@@ -20,6 +20,7 @@ class Combat implements \Iterator
 
     public function fight()
     {
+        $fightLog = new FightLog();
         $perso1Life = $this->perso1->getLifeCurrent();
         $perso2Life = $this->perso2->getLifeCurrent();
         $perso1Name = $this->perso1->getName();
@@ -38,15 +39,15 @@ class Combat implements \Iterator
                 $turn -= 1;
                 $report = "Tour " . $nbTour . ". " . $perso2Name . " attaque " . $perso1Name . " et lui inflige " . $dmg . " dégats. Il reste " . $perso1Life . " HP à " . $perso1Name . ".";
             }
-            array_push($this->combatLog, $report);
+            $fightLog->append($report);
             $nbTour += 1;
         }
         if ($turn == 2) {
             $report = $perso1Name . " a tué " . $perso2Name . ".";
-            array_push($this->combatLog, $report);
+            $fightLog->append($report);
         } else {
             $report = $perso2Name . " a tué " . $perso1Name . ".";
-            array_push($this->combatLog, $report);
+            $fightLog->append($report);
         }
         ob_start();
         include __DIR__ . "/../../../template/combat.html.php";
@@ -76,29 +77,29 @@ class Combat implements \Iterator
             return $dmg;
         }
     }
-
-    public function current()
-    {
-        return $this->combatLog[$this->position];
-    }
-
-    public function next()
-    {
-        ++$this->position;
-    }
-
-    public function key()
-    {
-        return $this->position;
-    }
-
-    public function valid()
-    {
-        return isset($this->combatLog[$this->position]);
-    }
-
-    public function rewind()
-    {
-        --$this->position;
-    }
+//
+//    public function current()
+//    {
+//        return $this->combatLog[$this->position];
+//    }
+//
+//    public function next()
+//    {
+//        ++$this->position;
+//    }
+//
+//    public function key()
+//    {
+//        return $this->position;
+//    }
+//
+//    public function valid()
+//    {
+//        return isset($this->combatLog[$this->position]);
+//    }
+//
+//    public function rewind()
+//    {
+//        --$this->position;
+//    }
 }
