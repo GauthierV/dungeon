@@ -1,7 +1,7 @@
 <?php
 
 include __DIR__ . "/../template/navbar.html";
-include __DIR__ . "/../src/autoload.php";
+include __DIR__ . "/../vendor/autoload.php";
 
 $dungeon = new POE\Dungeon();
 

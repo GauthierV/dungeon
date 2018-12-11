@@ -50,7 +50,7 @@ class Combat
             $fightLog->append($report);
         }
         ob_start();
-        include __DIR__ . "/../../../template/combat.html.php";
+        include __DIR__ . "/../../template/combat.html.php";
         $output = ob_get_clean();
         return $output;
     }

@@ -23,8 +23,8 @@ class Dungeon
         $report = $character->move(0, 2);
 
         ob_start();
-        include __DIR__ . "/../../template/reportSituation.html.php";
-        include __DIR__ . "/../../template/map.html.php";
+        include __DIR__ . "/../template/reportSituation.html.php";
+        include __DIR__ . "/../template/map.html.php";
         $output = ob_get_clean();
         return $output;
     }
@@ -32,7 +32,7 @@ class Dungeon
     public function createChar()
     {
         ob_start();
-        include __DIR__ . "/../../template/createChar.html";
+        include __DIR__ . "/../template/createChar.html";
         $output = ob_get_clean();
         return $output;
     }
@@ -41,7 +41,7 @@ class Dungeon
     {
         $listPerso = $list;
         ob_start();
-        include __DIR__ . "/../../template/listePerso.html.php";
+        include __DIR__ . "/../template/listePerso.html.php";
         $output = ob_get_clean();
         return $output;
     }
