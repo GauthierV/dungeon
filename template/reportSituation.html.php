@@ -16,13 +16,13 @@
 
 <h1><?= $character->getName(); ?> le <?= $character->getClass(); ?></h1>
 <div>
-    <label for="hp">PV : <?= $character->getLifeCurrent(); ?> / <?= $character->getLifeMax(); ?></label>
-    <progress id="hp" max="<?= $character->getLifeMax(); ?>" value="<?= $character->getLifeCurrent(); ?>"></progress>
+    <label for="hp">PV : <?= $character->getLifeCurrent(); ?> / <?= $character->getMaxLife(); ?></label>
+    <progress id="hp" max="<?= $character->getMaxLife(); ?>" value="<?= $character->getLifeCurrent(); ?>"></progress>
 </div>
 
 <div>
-    <label for="mana">MANA : <?= $character->getEnergyCurrent(); ?> / <?= $character->getEnergyMax(); ?></label>
-    <progress id="mana" max="<?= $character->getEnergyMax(); ?>"
+    <label for="mana">MANA : <?= $character->getEnergyCurrent(); ?> / <?= $character->getMaxEnergy(); ?></label>
+    <progress id="mana" max="<?= $character->getMaxEnergy(); ?>"
               value="<?= $character->getEnergyCurrent(); ?>"></progress>
 </div>
 

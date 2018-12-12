@@ -3,7 +3,17 @@
 include __DIR__ . "/../template/navbar.html";
 include __DIR__ . "/../vendor/autoload.php";
 
-$dungeon = new POE\Dungeon();
+require __DIR__ . "/../src/bootstrap.php";
+
+$logger = new Monolog\Logger("main");
+
+$handlers = [new Monolog\Handler\StreamHandler(__DIR__ . '/../test.log')];
+
+$logger->setHandlers($handlers);
+
+$logger->info("Déamarrage de l'appli");
+
+$dungeon = new POE\Dungeon($entityManager);
 
 
 // quand on tape l'url /perso et en get ?(nom de perso) ça retourne son état
@@ -21,18 +31,18 @@ if ($_SERVER['REQUEST_URI'] == "/creationPerso"){
 }
 
 if ($_SERVER['REQUEST_URI'] == "/charCreated"){
-    $char = new \POE\database\Character();
-    $response = $char->createChar($_POST['nom'], $_POST['class']);
+//    $char = new \POE\entity\Character();
+    $response = $dungeon->charCreated($_POST['nom'], $_POST['class']);
     echo "<h3> " . $response . "</h3>";
 }
 
 if ($_SERVER['REQUEST_URI'] == "/"){
-    $listChars = \POE\database\Character::getChars();
-    echo $dungeon->listePerso($listChars);
+    echo $dungeon->listePerso();
 }
 
 if ($_SERVER['REQUEST_URI'] == "/fight"){
     echo $dungeon->fight();
+    $logger->info("Fin du combat entre TOTO et JCVD");
 }
 
 

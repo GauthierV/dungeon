@@ -2,7 +2,7 @@
 
 namespace POE\fight;
 
-use POE\database\Character;
+use POE\entity\Character;
 
 class Combat
 {

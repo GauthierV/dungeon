@@ -1,18 +1,81 @@
 <?php
 
-namespace POE\database;
+namespace POE\entity;
 
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
+use POE\database\Connexion;
+
+/**
+ * Class Character
+ * @ORM\Entity()
+ * @ORM\Table(name="characters")
+ */
 class Character
 {
+
+    /**
+     * L'identifiant en BDD
+     * @var  int
+     * @ORM\Id()
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue()
+     */
+    private $id;
+    /**
+     * Le nom du personnage
+     * @var string
+     * @ORM\Column(type="string")
+     */
     private $name;
+    /**
+     * La classe du personnage
+     * @var string
+     * @ORM\Column(type="string")
+     */
     private $class;
+
+    /**
+     * @var int
+     * @ORM\Column(type="integer")
+     */
     private $x_position;
+    /**
+     * @var int
+     * @ORM\Column(type="integer")
+     */
     private $y_position;
+    /**
+     * @var int
+     * @ORM\Column(type="integer")
+     */
     private $attack;
-    private $life_max;
+    /**
+     * @var int
+     * @ORM\Column(type="integer", name="life_max")
+     */
+    private $maxLife;
+    /**
+     * @var int
+     * @ORM\Column(type="integer")
+     */
     private $life_current;
-    private $energy_max;
+    /**
+     * @var int
+     * @ORM\Column(type="integer", name="energy_max")
+     */
+    private $maxEnergy;
+    /**
+     * @var int
+     * @ORM\Column(type="integer")
+     */
     private $energy_current;
+    /**
+     * @var int
+     * @ORM\Column(type="integer")
+     */
     private $defense;
 
     const TYPES = [
@@ -43,56 +106,71 @@ class Character
     ];
 
 
-
-    public static function getChars()
+    public static function getChars(EntityManager $manager)
     {
-        $connect = Connexion::getInstance();
-        $return = [];
-        $connexion = $connect->getDb();
-        $result = $connexion->query("SELECT name, class FROM characters");
+//        $connect = Connexion::getInstance();
+//        $return = [];
+//        $connexion = $connect->getDb();
+//        $result = $connexion->query("SELECT name, class FROM characters");
 
-        foreach ($result as $r) {
-            array_push($return, $r);
-        };
-        return $return;
+        return $manager->getRepository(Character::class)->findAll();
+//
+//        foreach ($result as $r) {
+//            array_push($return, $r);
+//        };
+//        return $return;
     }
 
 
-    public function createChar($nom, $class)
+    public function createChar($nom, $class, EntityManager $entity)
     {
         if (!key_exists($class, self::TYPES)) {
             throw new \Exception('Class of character ' . $class . ' does not exist');
         }
 
+
+
         $this->setName($nom);
         $this->setClass($class);
         $this->setXPosition(1);
         $this->setYPosition(1);
-        $this->setLifeMax(self::TYPES[$class]['life_max']);
+        $this->setMaxLife(self::TYPES[$class]['life_max']);
         $this->setLifeCurrent(self::TYPES[$class]['life_max']);
-        $this->setEnergyMax(self::TYPES[$class]['energy_max']);
+        $this->setMaxEnergy(self::TYPES[$class]['energy_max']);
         $this->setEnergyCurrent(self::TYPES[$class]['energy_max']);
         $this->setAttack(self::TYPES[$class]['attack']);
         $this->setDefense(self::TYPES[$class]['defense']);;
 
-//        $connect = new Connexion();
-//        $connexion = $connect->getDb();
-        $connexion = Connexion::getInstance()->getDb();
-        $statement = $connexion->prepare(
-            "INSERT INTO characters (name, life_max, energy_max, energy_current, attack, defense, life_current, class, x_position, y_position)
-            VALUES(:name, :life_max, :energy_max, :energy_current, :attack, :defense, :life_current, :class, :x_position, :y_position)");
+//        $connexion = Connexion::getInstance()->getDb();
+//        $statement = $connexion->prepare(
+//            "INSERT INTO characters (name, life_max, energy_max, energy_current, attack, defense, life_current, class, x_position, y_position)
+//            VALUES(:name, :life_max, :energy_max, :energy_current, :attack, :defense, :life_current, :class, :x_position, :y_position)");
+//
+//        foreach ($this as $key => $value) {
+//            if ($key == "connexion") {
+//                continue;
+//            }
+//            $statement->bindValue($key, $value);
+//        }
+//
+//        try {
+//            $statement->execute();
+//        } catch (\PDOException $exception) {
+//            return "Échec lors de l'ajout : de " . $this->getName() . ". Erreur : " . $exception->getMessage();
+//        }
 
-        foreach ($this as $key => $value) {
-            if ($key == "connexion"){
-                continue;
-            }
-            $statement->bindValue($key, $value);
+        try {
+            $entity->persist($this);
+        } catch (ORMException $e) {
+            return $e->getMessage();
         }
 
         try {
-            $statement->execute();
-        } catch (\PDOException $exception) {
-            return "Échec lors de l'ajout : de " .$this->getName() . ". Erreur : " . $exception->getMessage();
+            $entity->flush();
+        } catch (OptimisticLockException $e) {
+            return $e->getMessage();
+        } catch (ORMException $e) {
+            return $e->getMessage();
         }
 
         return "Le personnage " . $this->getName() . " de classe " . $this->getClass() . " a été créé.";
@@ -151,9 +229,9 @@ class Character
         return $this->y_position;
     }
 
-    public function getLifeMax()
+    public function getMaxLife()
     {
-        return $this->life_max;
+        return $this->maxLife;
     }
 
     public function getLifeCurrent()
@@ -161,9 +239,9 @@ class Character
         return $this->life_current;
     }
 
-    public function getEnergyMax()
+    public function getMaxEnergy()
     {
-        return $this->energy_max;
+        return $this->maxEnergy;
     }
 
     public function getEnergyCurrent()
@@ -202,9 +280,9 @@ class Character
         $this->attack = $attack;
     }
 
-    public function setLifeMax($life_max): void
+    public function setMaxLife($maxLife): void
     {
-        $this->life_max = $life_max;
+        $this->maxLife = $maxLife;
     }
 
     public function setLifeCurrent($life_current): void
@@ -212,9 +290,9 @@ class Character
         $this->life_current = $life_current;
     }
 
-    public function setEnergyMax($energy_max): void
+    public function setMaxEnergy($maxEnergy): void
     {
-        $this->energy_max = $energy_max;
+        $this->maxEnergy = $maxEnergy;
     }
 
     public function setEnergyCurrent($energy_current): void

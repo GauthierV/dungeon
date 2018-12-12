@@ -2,6 +2,8 @@
 
 namespace POE\database;
 
+use POE\entity\Character;
+
 class CharacterLoader
 {
 

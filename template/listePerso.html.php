@@ -6,7 +6,7 @@
 </head>
 <body>
 <?php foreach ($listPerso as $perso){
-    echo '<a href="/perso?name=' . $perso["name"] . '"><p>' . $perso["name"] . ' le ' . $perso["class"] . '</p></a>';
+    echo '<a href="/perso?name=' . $perso->getName() . '"><p>' . $perso->getName() . ' le ' . $perso->getClass() . '</p></a>';
 }?>
 </body>
 </html>
